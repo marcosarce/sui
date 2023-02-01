@@ -20,6 +20,7 @@ import {
   RequestAddDelegationTransaction,
   RequestWithdrawDelegationTransaction,
   RequestSwitchDelegationTransaction,
+  SpecialMoveCallTransaction,
 } from './txn-data-serializer';
 
 /**
@@ -52,7 +53,9 @@ export class RpcTxnDataSerializer implements TxnDataSerializer {
 
   async serializeToBytes(
     signerAddress: string,
-    unserializedTxn: UnserializedSignableTransaction,
+    unserializedTxn:
+      | UnserializedSignableTransaction
+      | SpecialMoveCallTransaction,
     mode: TransactionBuilderMode = 'Commit'
   ): Promise<Base64DataBuffer> {
     let endpoint: string;
