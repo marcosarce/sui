@@ -31,7 +31,7 @@ export interface ButtonConnectedToProps
     extends VariantProps<typeof styles>,
         Omit<ComponentProps<'button'>, 'ref' | 'className'> {
     iconBefore?: ReactNode;
-    text?: string;
+    text?: ReactNode;
     iconAfter?: ReactNode;
 }
 
