@@ -275,7 +275,8 @@ export type TransactionQuery =
   | { ToAddress: SuiAddress };
 
 export type EmptySignInfo = object;
-export type AuthorityName = string;
+export type AuthorityName = Infer<typeof AuthorityName>;
+export const AuthorityName = string();
 
 export const TransactionBytes = object({
   txBytes: string(),
@@ -515,11 +516,9 @@ export function getTotalGasUsedUpperBound(
 ): number | undefined {
   const gasSummary = getExecutionStatusGasSummary(data);
   return gasSummary
-    ? gasSummary.computationCost +
-        gasSummary.storageCost
+    ? gasSummary.computationCost + gasSummary.storageCost
     : undefined;
 }
-
 
 export function getTransactionEffects(
   data: SuiExecuteTransactionResponse | SuiTransactionResponse
@@ -617,7 +616,8 @@ export function getNewlyCreatedCoinRefsAfterSplit(
     return effects.created?.map((c) => c.reference);
   }
   if ('effects' in data) {
-    const effects = ('effects' in data.effects ? data.effects.effects : data.effects);
+    const effects =
+      'effects' in data.effects ? data.effects.effects : data.effects;
     return effects.created?.map((c) => c.reference);
   }
   return undefined;
